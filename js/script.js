@@ -26,6 +26,18 @@ newCell.addEventListener("click", function() {
     });
 }};
 
+// funzione per generare bombe
+const generateBombs = (totalCells, bombNumber) => {
+const bombs = [];
+while (bombs.length < bombNumber){
+    const newBomb = Math.floor(Math.random() * totalCells) + 1
+    if (!bombs.includes(newBomb)) {
+        bombs.push(newBomb);
+    }
+};
+console.log(bombs);
+}
+
 // * svolgimento
 // creo event listener
 formPlay.addEventListener("submit", function(event) {
