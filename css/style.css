@@ -32,7 +32,7 @@ form button {
 /* * main */
 main {
     background-color: #7FFFD4;
-    padding: 5rem 0 5rem;
+    padding: 2rem 0 3rem;
 }
 
 /* grid & cells */
@@ -68,6 +68,7 @@ main {
 .clicked {
     background-color: blue;
     color: white;
+    cursor: not-allowed;
 }
 
 .bomb.clicked {

@@ -3,9 +3,14 @@ const formPlay = document.querySelector("form");
 const selectDifficulty = document.querySelector("select");
 const buttonPlay = document.querySelector("button");
 const grid = document.getElementById("grid");
+const scoreSpan = document.getElementById("your-score");
 
+// dichiaro variabili
+let score = 0;
+
+// * funzioni
 // funzione per creare celle
-const createCells = cellsTotal => {
+const createCells = (cellsTotal, score) => {
 for (let i = 1; i <= cellsTotal; i++) {
 const newCell = document.createElement("div");
 newCell.innerText = i;
@@ -14,12 +19,14 @@ grid.appendChild(newCell);
 
 // far si che al click si colorino e stampino in console il numero della cella
 newCell.addEventListener("click", function() {
-    console.log(newCell.innerText);
+    if (newCell.classList.contains("clicked")) return;
     newCell.classList.add("clicked");
+    console.log(newCell.innerText);
+    scoreSpan.innerText = ++score;
     });
 }};
 
-
+// * svolgimento
 // creo event listener
 formPlay.addEventListener("submit", function(event) {
     // ! blocco riavvio pagina
@@ -38,7 +45,6 @@ formPlay.addEventListener("submit", function(event) {
     // dichiaro variabili
     let cellsCol;
     let cellsRow;
-    let cellsTotal;
 
     switch (selectDifficulty.value) {
         case "easy":
@@ -55,10 +61,10 @@ formPlay.addEventListener("submit", function(event) {
     }
 
     // calcolo le celle totali che compongono la griglia
-    cellsTotal = cellsCol * cellsRow;
+    const cellsTotal = cellsCol * cellsRow;
 
     // inserisco classe alla griglia per formattare le celle
     grid.classList.add(selectDifficulty.value);
 
-    createCells(cellsTotal);
-})
+    createCells(cellsTotal, score);
+});
