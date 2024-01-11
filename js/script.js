@@ -1,69 +1,64 @@
-// recupero gli elementi HTML
+// seleziono li elementi HTML
+const formPlay = document.querySelector("form");
+const selectDifficulty = document.querySelector("select");
+const buttonPlay = document.querySelector("button");
 const grid = document.getElementById("grid");
-const playButton = document.querySelector("button");
-const form = document.querySelector("form");
 
-// dichiaro le variabili relative alla quantità di celle da inserire
-let cellsRow;
-let cellsColumn;
-let cellsTotal;
+// funzione per creare celle
+const createCells = cellsTotal => {
+for (let i = 1; i <= cellsTotal; i++) {
+const newCell = document.createElement("div");
+newCell.innerText = i;
+newCell.classList.add("cell");
+grid.appendChild(newCell);
 
-// event listener al click del pulsante play
-form.addEventListener("submit", function(event) {
-    // ! impedisco che si ricarichi la pagina
+// far si che al click si colorino e stampino in console il numero della cella
+newCell.addEventListener("click", function() {
+    console.log(newCell.innerText);
+    newCell.classList.add("clicked");
+    });
+}};
+
+
+// creo event listener
+formPlay.addEventListener("submit", function(event) {
+    // ! blocco riavvio pagina
     event.preventDefault();
-    
-    // cambio il testo del bottone
-    playButton.innerText = "Re-Start!";
 
-    // cestino vecchia griglia in caso ci sia
+    // cambio la scritta nel bottone
+    buttonPlay.innerText = "Play Again!";
+
+    // svuoto la griglia
     grid.innerText = "";
 
-    // prendo il valore della select
-    const selectValue = document.querySelector("select").value;
-    console.log(selectValue);
+    //rimuovo vecchie classi
+    grid.classList.remove("hard", "medium", "easy");
 
-    // determino il valore della select
-    switch (selectValue) {
-        case "big":
+    // individuare quantità celle per riga, colonna e totali
+    // dichiaro variabili
+    let cellsCol;
+    let cellsRow;
+    let cellsTotal;
+
+    switch (selectDifficulty.value) {
+        case "easy":
+            cellsCol = 10;
             cellsRow = 10;
-            cellsColumn = cellsRow;
-            break;
+            break
         case "medium":
+            cellsCol = 9;
             cellsRow = 9;
-            cellsColumn = cellsRow;
-            break;
-        case "small":
+            break
+        case "hard":
+            cellsCol = 7;
             cellsRow = 7;
-            cellsColumn = cellsRow;
     }
 
-    // calcolo quantità di celle da inserire
-    cellsTotal = cellsRow * cellsColumn;
+    // calcolo le celle totali che compongono la griglia
+    cellsTotal = cellsCol * cellsRow;
 
-// Genero le celle
-for (let i = 1; i <= cellsTotal; i++) {
-    const newCell = document.createElement("div");
-    // aggiungo classe a seconda delle dimensioni
-    switch (selectValue) {
-        case "big":
-            newCell.classList.add("cell-big");
-            break;
-        case "medium":
-            newCell.classList.add("cell-medium");
-            break;
-        case "small":
-            newCell.classList.add("cell-small");
-    }
-    // inserisco il numero
-    newCell.innerText = i;
-    // stampo in pagina
-    grid.appendChild(newCell);
+    // inserisco classe alla griglia per formattare le celle
+    grid.classList.add(selectDifficulty.value);
 
-    // aggiungo event listener per il click colorando di azzurro con stampa in console
-    newCell.addEventListener("click", function(){        
-        newCell.classList.toggle("clicked");
-        console.log(i);
-    });
-}
-});
+    createCells(cellsTotal);
+})
