@@ -13,3 +13,59 @@ img {
     max-width: 100%;
     display: block;
 }
+
+/* * header */
+/* form */
+form {
+    width: 20%;
+}
+
+form select {
+    height: 28px;
+    width: 95px;
+}
+
+form button {
+    width: 95px;
+}
+
+/* * main */
+main {
+    background-color: #7FFFD4;
+    padding: 5rem 0 5rem;
+}
+
+/* grid & cells */
+.grid {
+    width: 600px;
+    height: 600px;
+}
+
+[class*="cell"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    font-size: large;
+    cursor: pointer;
+}
+
+.cell-big {
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+}
+
+.cell-medium {
+    width: calc(100% / 9);
+    height: calc(100% / 9);
+}
+
+.cell-small {
+    width: calc(100% / 7);
+    height: calc(100% / 7);
+}
+
+.clicked {
+    background-color: blue;
+    color: white;
+}
