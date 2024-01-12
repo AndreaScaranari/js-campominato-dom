@@ -74,24 +74,23 @@ formPlay.addEventListener("submit", function(event) {
 
     // creo le celle
     for (let i = 1; i <= cellsTotal; i++) {
-        const newCell = document.createElement("div");
-        newCell.innerText = i;
-        newCell.classList.add("cell");
-        grid.appendChild(newCell);
+        const cell = document.createElement("div");
+        cell.innerText = i;
+        cell.classList.add("cell");
+        grid.appendChild(cell);
         
     // far sì che al click si colorino e stampino in console il numero della cella
-        newCell.addEventListener("click", function() {
-            if (newCell.classList.contains("clicked")) return;
-        newCell.classList.add("clicked");
-        console.log(newCell.innerText);
+        cell.addEventListener("click", function() {
+            if (cell.classList.contains("clicked")) return;
+        cell.classList.add("clicked");
+        console.log(cell.innerText);
 
     // capire se contiene bombe
-        const hasHitBomb = bombs.includes(parseInt(newCell.innerText));
+        const hasHitBomb = bombs.includes(parseInt(cell.innerText));
 
             // rivelo bomba e perdo la partita
             if (hasHitBomb) {
-            console.log();
-            newCell.classList.add("bomb");
+            cell.classList.add("bomb");
             isGameOver = true;
 
             // altrimenti aumentare punteggio
@@ -102,22 +101,34 @@ formPlay.addEventListener("submit", function(event) {
                 if (scoreSpan.innerText == maxScore) {
                     isGameOver = true;
                 }
-
             }
 
             // messaggio di fine partita
             if (isGameOver) {
                 if (hasHitBomb) {
                     message = "Bomba pestata! Hai perso :( Conferma per giocare ancora!"
+                    console.log(message);
                 } else if (scoreSpan.innerText == maxScore){
                     message = "Wow, complimenti! Hai vinto :) Conferma per giocare ancora!";
+                    console.log(message);
                 }
 
             // resetto la condizione di game over
             isGameOver = false;
 
-            // // chiedere se vuole giocare di nuovo
-            // const playAgain = confirm(message);
-            // if (playAgain) formPlay.submit();
+            // raccolgo tutte le celle
+            const cells = document.querySelectorAll(".cell");
+
+            // le rivelo mettendo loro la classe "clicked" e, se necessario, "bomb"
+            for (let cell of cells) {
+                cell.classList.add("clicked");
+                if (bombs.includes(parseInt(cell.innerText))) {
+                    cell.classList.add("bomb");
+                }
+            }
+
+            // # chiedere se vuole giocare di nuovo
+            const playAgain = confirm(message);
+            if (playAgain) formPlay.submit();
         }
         })}});
